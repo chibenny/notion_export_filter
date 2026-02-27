@@ -1,7 +1,6 @@
 import argparse
 import csv
 import datetime
-import os
 from pathlib import Path
 
 from notion_filter import NotionFilter
@@ -65,8 +64,8 @@ def fetch_args():
 def main():
     args = fetch_args()
     rows = []
-    for f_name in os.listdir("notion_tickets"):
-        rows = rows + unpack(CSV_DIR / f_name)
+    for path in CSV_DIR.glob("*.csv"):
+        rows = rows + unpack(path)
 
     # preflight check
     if not args.name:
@@ -81,6 +80,10 @@ def main():
     year_in_review = (
         n_filter.name(args.name).status(args.status).date_range(args.start, args.end)
     ).results
+
+    if not year_in_review:
+        print("No results found matching your filters.")
+        return
 
     export(remove_duplicates(year_in_review))
 
