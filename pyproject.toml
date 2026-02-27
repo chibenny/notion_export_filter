@@ -1,0 +1,17 @@
+[project]
+name = "notion-export-filter"
+version = "0.1.0"
+description = "Filter through a CSV export of Notion tickets"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "black>=26.1.0",
+]
+
+[tool.ruff.lint]
+select = ["E", "F", "W"]  # equivalent to flake8 defaults, add more as needed
+
+[dependency-groups]
+dev = [
+    "ruff>=0.15.4",
+]
